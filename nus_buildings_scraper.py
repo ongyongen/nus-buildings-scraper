@@ -66,8 +66,9 @@ class Scraper:
             lat = list(map(lambda x:re.search(r"&lat=(.*?)';", x)[1], self.details))
             lon = list(map(lambda x:re.search(r"#page=map&long=(.*?)&", x)[1], self.details))
             addr = list(map(lambda x:re.search(r"set_lp(.*?)https", x)[1][1:].replace("'","")[:-2], self.details))
+            addr_cleaned = [x.replace("\\", "'").replace("  "," ") for x in addr]
             self.map_info["name"] = self.names
-            self.map_info["address"] = addr
+            self.map_info["address"] = addr_cleaned
             self.map_info["lat"] = lat
             self.map_info["lon"] = lon
         except Exception as e:
